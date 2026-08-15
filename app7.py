@@ -645,3 +645,33 @@ def sync_hospital_syndromes():
         st.markdown("---")
         st.markdown("### 📋 Local Submission Ledger (Stored on this device only)")
         st.dataframe(pd.DataFrame(st.session_state.submitted_tally_log), use_container_width=True, hide_index=True)
+        # --- Language Selector Configuration ---
+selected_lang = st.sidebar.selectbox(
+    "🌐 Select Language / ଭାଷା ଚୟନ / भाषा चुनें",
+    ["English", "ଓଡ଼ିଆ (Odia)", "हिंदी (Hindi)"]
+)
+
+# Translation dictionary mapping
+i18n = {
+    "English": {
+        "title": "SurakshaNet: Disease Cluster Radar",
+        "safe_status": "🟢 Safe (Normal Baseline)",
+        "red_alert": "🔴 High Health Advisory",
+        "precautions_label": "Recommended Community Action",
+        "distance": "Distance (km)"
+    },
+    "ଓଡ଼ିଆ (Odia)": {
+        "title": "ସୁରକ୍ଷା-ନେଟ୍: ମହାମାରୀ ସତର୍କତା ରାଡାର",
+        "safe_status": "🟢 ସୁରକ୍ଷିତ (ସ୍ୱାଭାବିକ ସ୍ଥିତି)",
+        "red_alert": "🔴 ଉଚ୍ଚ ସ୍ୱାସ୍ଥ୍ୟ ସତର୍କତା ଜାରି",
+        "precautions_label": "ସୁରକ୍ଷା ନିର୍ଦ୍ଦେଶାବଳୀ",
+        "distance": "ଦୂରତା (କି.ମି.)"
+    },
+    "हिंदी (Hindi)": {
+        "title": "सुरक्षा-नेट: रोग संकुल निगरानी रडार",
+        "safe_status": "🟢 सुरक्षित (सामान्य स्तर)",
+        "red_alert": "🔴 उच्च स्वास्थ्य चेतावनी",
+        "precautions_label": "अनुशंसित स्वास्थ्य दिशा-निर्देश",
+        "distance": "दूरी (कि.मी.)"
+    }
+}
