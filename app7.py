@@ -2,8 +2,8 @@
 SurakshaNet: Privacy-Preserving Disease Cluster Surveillance Radar
 Smart India Hackathon Prototype (Problem Statement S10)
 Featuring:
-1. Full Native Multilingual UI (English, Odia / ଓଡ଼ିଆ, Hindi / हिंदी)
-2. Citizen View: Tabular Proximity Reports, Responsive OpenStreetMap & Centered Red Zone Modal
+1. Sidebar Language Selector (English, Odia / ଓଡ଼ିଆ, Hindi / हिंदी)
+2. Citizen View: Tabular Proximity Reports, Responsive OpenStreetMap & Centered Hazard Triangle Modal
 3. Officer View: 1-Click Judge Auth, Differential Privacy Audit & QR Bulletin
 4. Clinic Portal: Facility Verification, 10s Tally, IVR Calling Simulator, & EMR Connector
 """
@@ -148,17 +148,36 @@ if "submitted_tally_log" not in st.session_state:
 if "ivr_call_active" not in st.session_state:
     st.session_state.ivr_call_active = False
 
-# --- Top Navigation Bar with Language Switcher ---
-lang_col, nav_col1, nav_col2 = st.columns([1, 2.2, 1.3])
+# --- SIDEBAR (LEFT SIDE): Language & Anomaly Controls ---
+st.sidebar.header("🌐 Language / ଭାଷା / भाषा")
+selected_lang = st.sidebar.selectbox(
+    "Select Display Language",
+    ["English", "ଓଡ଼ିଆ (Odia)", "हिंदी (Hindi)"],
+    key="global_sidebar_lang_selector"
+)
+t = I18N[selected_lang]
 
-with lang_col:
-    selected_lang = st.selectbox(
-        "🌐 Language / ଭାଷା / भाषा",
-        ["English", "ଓଡ଼ିଆ (Odia)", "हिंदी (Hindi)"],
-        key="global_lang_selector"
-    )
-    t = I18N[selected_lang]
+st.sidebar.markdown("---")
+st.sidebar.header("🕹️ Anomaly Simulation Engine")
+scenario = st.sidebar.selectbox(
+    "Select Epidemiological Scenario",
+    [
+        "🟢 Normal Baseline (No Cluster)",
+        "🌊 Gastrointestinal / Waterborne Cluster Pattern",
+        "🫁 Acute Respiratory Cluster Pattern",
+        "⚠️ Single-Source Input Mismatch / Typo",
+        "📋 Rural Reporting Delay & Data Gap"
+    ]
+)
 
+if st.session_state.health_officer_authenticated:
+    st.sidebar.subheader("🔒 Differential Privacy Parameters")
+    epsilon = st.sidebar.slider("Privacy Budget (Epsilon: ε)", 0.1, 2.0, 0.5, 0.1)
+else:
+    epsilon = 0.5
+
+# --- Top Navigation Bar ---
+nav_col1, nav_col2 = st.columns([2.5, 1.5])
 with nav_col1:
     st.title(t["app_title"])
     st.caption(t["app_sub"])
@@ -232,25 +251,6 @@ if selected_role_idx == 0:
     st.session_state.clinic_staff_authenticated = False
 
 st.divider()
-
-# --- Sidebar Controls ---
-st.sidebar.header("🕹️ Anomaly Simulation Engine")
-scenario = st.sidebar.selectbox(
-    "Select Epidemiological Scenario",
-    [
-        "🟢 Normal Baseline (No Cluster)",
-        "🌊 Gastrointestinal / Waterborne Cluster Pattern",
-        "🫁 Acute Respiratory Cluster Pattern",
-        "⚠️ Single-Source Input Mismatch / Typo",
-        "📋 Rural Reporting Delay & Data Gap"
-    ]
-)
-
-if st.session_state.health_officer_authenticated:
-    st.sidebar.subheader("🔒 Differential Privacy Parameters")
-    epsilon = st.sidebar.slider("Privacy Budget (Epsilon: ε)", 0.1, 2.0, 0.5, 0.1)
-else:
-    epsilon = 0.5
 
 # --- Data Telemetry Engine ---
 np.random.seed(42)
@@ -354,7 +354,7 @@ for z in zones_meta:
 df = pd.DataFrame(data)
 
 # ==============================================================================
-# VIEW 1: CITIZEN VIEW (Fully Localized)
+# VIEW 1: CITIZEN VIEW
 # ==============================================================================
 if selected_role_idx == 0:
     st.subheader(t["proximity_header"])
@@ -376,7 +376,7 @@ if selected_role_idx == 0:
     df["Distance_km"] = df.apply(lambda r: haversine_distance(user_lat, user_lon, r["lat"], r["lon"]), axis=1)
     df_sorted = df.sort_values(by="Distance_km")
 
-    # --- Responsive Red Zone Dialog Modal ---
+    # Red Zone Alert Dialog
     @st.dialog(" ")
     def show_red_zone_hazard_modal(zone_name, est_cases, precautions):
         st.markdown(f"""
@@ -423,7 +423,7 @@ if selected_role_idx == 0:
     else:
         st.success(f"✅ **{current_zone['Status_Badge']}**\n\n👉 {current_zone['Precautions']}")
 
-    # Mobile-Friendly OpenStreetMap
+    # Responsive OpenStreetMap
     st.markdown(f"#### {t['map_header']}")
     fig_map = px.scatter_mapbox(
         df,
