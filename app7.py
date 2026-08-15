@@ -25,7 +25,114 @@ def haversine_distance(lat1, lon1, lat2, lon2):
     a = math.sin(dlat / 2)**2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2)**2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return round(R * c, 1)
-
+# --- Multilingual Localization Dictionary (i18n) ---
+I18N = {
+    "English": {
+        "app_title": "🛡️ SurakshaNet: Disease Cluster Radar",
+        "app_sub": "Privacy-preserving multi-signal syndromic surveillance & anomaly detection (Odisha Health Grid)",
+        "switch_view": "👤 Switch Viewport",
+        "roles": [
+            "Citizen / Public View", 
+            "Public Health Officer / Authorized View",
+            "🏥 Clinic / Frontline Staff Input Portal"
+        ],
+        "safe_badge": "🟢 Safe (Normal Baseline)",
+        "verify_badge": "🟡 Under Verification",
+        "alert_badge": "🔴 High Health Advisory",
+        "safe_prec": "Safe historical baseline. Standard health hygiene recommended.",
+        "verify_prec": "Routine verification underway. No community health risk.",
+        "alert_prec": "Active symptom cluster detected. Practice preventive hygiene & seek care if fever persists.",
+        "proximity_header": "📍 Nearby Health Alerts & Neighborhood Proximity",
+        "privacy_note": "🔒 Privacy Guarantee: Proximity is calculated locally in your browser. Your coordinates are never stored.",
+        "choose_loc": "Select Your Current Neighborhood:",
+        "recheck_btn": "🎯 Re-check Area Status",
+        "map_header": "🗺️ Regional Health Overview Map",
+        "table_header": "📋 Neighborhood Health Status & Safety Guidance",
+        "col_sector": "Surveillance Sector",
+        "col_dist": "Distance (km)",
+        "col_status": "Health Status",
+        "col_cases": "Approx. Active Cases",
+        "col_water": "Water Quality / Sewage Indicator",
+        "col_pharma": "Local Pharmacy Medicine Demand",
+        "col_prec": "Recommended Community Action",
+        "red_alert_title": "RED ZONE HAZARD ALERT",
+        "ack_btn": "🚨 Acknowledge & Stay Alert",
+        "water_norm": "Normal",
+        "water_high": "High (Spike Detected)",
+        "pharma_norm": "Normal",
+        "pharma_high": "High Surge (+140%)"
+    },
+    "ଓଡ଼ିଆ (Odia)": {
+        "app_title": "🛡️ ସୁରକ୍ଷା-ନେଟ୍: ମହାମାରୀ ସତର୍କତା ରାଡାର",
+        "app_sub": "ଗୋପନୀୟତା ସୁରକ୍ଷିତ ବହୁମୁଖୀ ଲକ୍ଷଣ ନିରୀକ୍ଷଣ ଏବଂ ସତର୍କତା ବ୍ୟବସ୍ଥା (ଓଡ଼ିଶା ସ୍ୱାସ୍ଥ୍ୟ ଗ୍ରୀଡ୍)",
+        "switch_view": "👤 ବିଭାଗ ବାଛନ୍ତୁ",
+        "roles": [
+            "ନାଗରିକ / ସାଧାରଣ ସୂଚନା ଦୃଶ୍ୟ", 
+            "ସ୍ୱାସ୍ଥ୍ୟ ଅଧିକାରୀ / ପ୍ରାଧିକୃତ ଦୃଶ୍ୟ",
+            "🏥 କ୍ଲିନିକ୍ ଏବଂ ସ୍ୱାସ୍ଥ୍ୟକର୍ମୀ ଡାଟା ପୋର୍ଟାଲ୍"
+        ],
+        "safe_badge": "🟢 ସୁରକ୍ଷିତ (ସ୍ୱାଭାବିକ ସ୍ଥିତି)",
+        "verify_badge": "🟡 ଯାଞ୍ଚ ଚାଲିଛି",
+        "alert_badge": "🔴 ଉଚ୍ଚ ସ୍ୱାସ୍ଥ୍ୟ ସତର୍କତା ଜାରି",
+        "safe_prec": "ସ୍ୱାଭାବିକ ସ୍ଥିତି। ସାଧାରଣ ସ୍ୱାସ୍ଥ୍ୟ ସ୍ୱଚ୍ଛତା ନିୟମ ପାଳନ କରନ୍ତୁ।",
+        "verify_prec": "ତଥ୍ୟ ଯାଞ୍ଚ ଚାଲିଛି। ଭୟଭୀତ ହେବାର କୌଣସି କାରଣ ନାହିଁ।",
+        "alert_prec": "ଏହି ଅଞ୍ଚଳରେ ରୋଗ ଲକ୍ଷଣ ବୃଦ୍ଧି ପାଇଛି। ପାଣି ଫୁଟାଇ ପିଅନ୍ତୁ ଓ ଜ୍ୱର ହେଲେ ତୁରନ୍ତ ଡାକ୍ତର ଦେଖାନ୍ତୁ।",
+        "proximity_header": "📍 ନିକଟସ୍ଥ ସ୍ୱାସ୍ଥ୍ୟ ସତର୍କତା ଏବଂ ଦୂରତା",
+        "privacy_note": "🔒 ଗୋପନୀୟତା ନିଶ୍ଚିତତା: ଦୂରତା ଆପଣଙ୍କ ମୋବାଇଲ୍ ଭିତରେ ଗଣନା ହୁଏ, ଆପଣଙ୍କ ଲୋକେସନ୍ କେବେବି ସର୍ଭରକୁ ଯାଏ ନାହିଁ।",
+        "choose_loc": "ଆପଣଙ୍କର ବର୍ତ୍ତମାନର ଅଞ୍ଚଳ ବାଛନ୍ତୁ:",
+        "recheck_btn": "🎯 ଅଞ୍ଚଳର ସ୍ଥିତି ଯାଞ୍ଚ କରନ୍ତୁ",
+        "map_header": "🗺️ ଆଞ୍ଚଳିକ ସ୍ୱାସ୍ଥ୍ୟ ମାନଚିତ୍ର",
+        "table_header": "📋 ଆଖପାଖ ଅଞ୍ଚଳର ସ୍ୱାସ୍ଥ୍ୟ ସ୍ଥିତି ଓ ସୁରକ୍ଷା ନିର୍ଦ୍ଦେଶାବଳୀ",
+        "col_sector": "ସର୍ଭେଲାନ୍ସ ସେକ୍ଟର",
+        "col_dist": "ଦୂରତା (କି.ମି.)",
+        "col_status": "ସ୍ୱାସ୍ଥ୍ୟ ସ୍ଥିତି",
+        "col_cases": "ଆନୁମାନିକ ସକ୍ରିୟ ସଂଖ୍ୟା",
+        "col_water": "ଜଳ / ଡ୍ରେନେଜ୍ ଗୁଣମାନ",
+        "col_pharma": "ଔଷଧ ଦୋକାନ ଚାହିଦା",
+        "col_prec": "ପରାମର୍ଶିତ ନିରାପତ୍ତା ପଦକ୍ଷେପ",
+        "red_alert_title": "⚠️ ରେଡ୍ ଜୋନ୍ ବିପଦ ସତର୍କତା",
+        "ack_btn": "🚨 ସୂଚନା ପାଇଲି ଏବଂ ସତର୍କ ରହିବି",
+        "water_norm": "ସ୍ୱାଭାବିକ",
+        "water_high": "ଅଧିକ (ଜଳ ପ୍ରଦୂଷଣ ଚିହ୍ନଟ)",
+        "pharma_norm": "ସ୍ୱାଭାବିକ",
+        "pharma_high": "ଉଚ୍ଚ ଚାହିଦା (+୧୪୦%)"
+    },
+    "हिंदी (Hindi)": {
+        "app_title": "🛡️ सुरक्षा-नेट: रोग संकुल निगरानी रडार",
+        "app_sub": "गोपनीयता-संरक्षित बहु-संकेत लक्षण निगरानी और आउटब्रेक डिटेक्शन (ओडिशा स्वास्थ्य ग्रिड)",
+        "switch_view": "👤 दृश्य बदलें",
+        "roles": [
+            "नागरिक / सार्वजनिक दृश्य", 
+            "सार्वजनिक स्वास्थ्य अधिकारी दृश्य",
+            "🏥 क्लिनिक एवं स्वास्थ्य कार्यकर्ता पोर्टल"
+        ],
+        "safe_badge": "🟢 सुरक्षित (सामान्य स्तर)",
+        "verify_badge": "🟡 सत्यापन प्रगति पर है",
+        "alert_badge": "🔴 उच्च स्वास्थ्य चेतावनी",
+        "safe_prec": "स्थिति सामान्य है। बुनियादी स्वच्छता नियमों का पालन करें।",
+        "verify_prec": "डेटा सत्यापन जारी है। घबराने की कोई आवश्यकता नहीं है।",
+        "alert_prec": "सक्रिय लक्षण संकुल पाया गया। पानी उबालकर पिएं और बुखार होने पर तुरंत डॉक्टर से मिलें।",
+        "proximity_header": "📍 नजदीकी स्वास्थ्य चेतावनी एवं दूरी",
+        "privacy_note": "🔒 गोपनीयता की गारंटी: दूरी की गणना आपके फोन/ब्राउज़र पर होती है। आपकी लोकेशन कहीं स्टोर नहीं होती।",
+        "choose_loc": "अपना वर्तमान क्षेत्र चुनें:",
+        "recheck_btn": "🎯 क्षेत्र की स्थिति पुनः जांचें",
+        "map_header": "🗺️ क्षेत्रीय स्वास्थ्य मानचित्र",
+        "table_header": "📋 निकटवर्ती स्वास्थ्य स्थिति और सुरक्षा दिशानिर्देश",
+        "col_sector": "निगरानी क्षेत्र",
+        "col_dist": "दूरी (किमी)",
+        "col_status": "स्वास्थ्य स्थिति",
+        "col_cases": "अनुमानित सक्रिय मामले",
+        "col_water": "जल / सीवेज गुणवत्ता सूचक",
+        "col_pharma": "दवाइयों की मांग (फार्मेसी)",
+        "col_prec": "अनुशंसित सुरक्षा कदम",
+        "red_alert_title": "⚠️ रेड ज़ोन ख़तरा चेतावनी",
+        "ack_btn": "🚨 समझ गया एवं सतर्क रहूँगा",
+        "water_norm": "सामान्य",
+        "water_high": "उच्च (संक्रमण संकेत)",
+        "pharma_norm": "सामान्य",
+        "pharma_high": "उच्च मांग (+140%)"
+    }
+}
 # --- Session State Management ---
 if "health_officer_authenticated" not in st.session_state:
     st.session_state.health_officer_authenticated = False
