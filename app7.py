@@ -311,23 +311,38 @@ if selected_role == "Citizen / Public View":
     else:
         st.success(f"✅ **STATUS:** {current_zone['Status_Badge']}\n\n**Notice:** {current_zone['Precautions']}")
 
+# Map Section (Mobile & Desktop Responsive)
     st.markdown("#### 🗺️ Regional Health Overview Map")
     fig_map = px.scatter_mapbox(
-        df, lat="lat", lon="lon",
+        df,
+        lat="lat",
+        lon="lon",
         color="Status_Badge",
         color_discrete_map={
             "🟢 Safe (Normal Baseline)": "#10b981",
             "🟡 Under Verification": "#f59e0b",
             "🔴 High Health Advisory": "#ef4444"
         },
-        size=[32 if "High" in s else 18 for s in df["Status_Badge"]],
+        size=[26 if "High" in s else 14 for s in df["Status_Badge"]],
         hover_name="Neighborhood",
         hover_data={"lat": False, "lon": False, "Distance_km": True, "Status_Badge": True},
-        zoom=10.2, center={"lat": user_lat, "lon": user_lon},
-        mapbox_style="carto-positron"
+        zoom=9.5,
+        center={"lat": float(df["lat"].mean()), "lon": float(df["lon"].mean())},
+        mapbox_style="open-street-map"
     )
-    fig_map.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, height=380)
-    st.plotly_chart(fig_map, use_container_width=True)
+    fig_map.update_layout(
+        autosize=True,
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        height=320,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5
+        )
+    )
+    st.plotly_chart(fig_map, use_container_width=True, config={"responsive": True, "displayModeBar": False})
 
     st.markdown("---")
     st.subheader("📋 Neighborhood Health Status & Safety Guidance")
